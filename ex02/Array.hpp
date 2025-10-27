@@ -6,7 +6,7 @@
 /*   By: smarquez <smarquez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 17:08:56 by smarquez          #+#    #+#             */
-/*   Updated: 2025/10/27 13:47:26 by smarquez         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:58:32 by smarquez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ class Array
 
 
 template  <typename T>
-Array<T>::Array() : elements(nullptr), _size(0)
+Array<T>::Array() : elements(NULL), _size(0)
 {
     std::cout << "default constructor" << std::endl;
 }
@@ -68,7 +68,15 @@ Array<T>::Array(unsigned int n) : _size(n)
 template <typename T>
 Array<T>::Array(const Array &copy)
 {
-    *this = copy;
+    if (this != &copy)
+    {
+        this->_size = copy._size;
+        this->elements = new T[this->_size]();
+        for (unsigned int i = 0; i < _size; i++)
+        {
+            this->elements[i] = copy.elements[i];
+        }
+    }
 }
 
 

@@ -6,32 +6,87 @@
 /*   By: smarquez <smarquez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:44:03 by smarquez          #+#    #+#             */
-/*   Updated: 2025/10/27 13:55:48 by smarquez         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:55:53 by smarquez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Array.hpp"
 
-int main()
-{
-    try
-    {
-        std::cout <<  "default constructor" << std::endl;
-        Array<int> empty_array;
-        std::cout << "trying to access element 1" << std::endl;
-        std::cout << empty_array[1] << std::endl;
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception caught" << e.what() << std::endl;
-    }
-    try
-    {
-        std::cout << "unsigned int constructor" << std::endl;
-        Array<int> int_array(5);
-        std::cout << "array with  a size of: " << int_array.size() << std::endl;
-        
-    }
-        
+#include "Array.hpp"
+#include <string>
+#include <iostream>
+# ifndef _COLORS
+# define _COLORS
+# define RED     "\033[1;31m"
+# define BLUE    "\033[1;34m"
+# define NC      "\033[0m"
+#endif // !_COLORS
 
+int main(void)
+{
+    std::cout << BLUE "INT TEST\n" NC;
+    try
+    {
+        Array<int> a(10); // tamaño 10
+        for (unsigned int i = 0; i < a.size(); i++){
+            a[i] = i + 1;
+            std::cout <<"Array["<<i<<"]-> " <<a[i] << std::endl;
+        }
+        std::cout << "size: " << a.size() << std::endl;
+        // FORZAR EXCEPCIÓN
+        std::cout << RED "Accessing out-of-bounds index...\n" NC;
+        a[20] = 42; // índice fuera de rango
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << RED "Exception caught: " << e.what() << NC << std::endl;
+    }
+    std::cout << BLUE "\nDOUBLE TEST\n" NC;
+    try
+    {
+        Array<double> a(10);
+        for (unsigned int i = 0; i < a.size(); i++){
+            a[i] = i + 0.5;
+            std::cout <<"Array["<<i<<"]-> " <<a[i] << std::endl;
+        }
+        std::cout << "size: " << a.size() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << RED "Exception caught: " << e.what() << NC << std::endl;
+    }
+    std::cout << BLUE "\nCHAR TEST\n" NC;
+    try
+    {
+        Array<char> a(10);
+        for (unsigned int i = 0; i < a.size(); i++){
+            a[i] = i + 65;
+            std::cout <<"Array["<<i<<"]-> " <<a[i] << std::endl;
+        }
+        std::cout << "size: " << a.size() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << RED "Exception caught: " << e.what() << NC << std::endl;
+    }
+    std::cout << BLUE "\nCOPY TEST\n" NC;
+    try
+    {
+        Array<char> a(10);
+        for (unsigned int i = 0; i < a.size(); i++){
+            a[i] = i + 65;
+        }
+        Array<char> b = a; // constructor de copia
+        // Modificar 'a' para verificar deep copy
+        for (unsigned int i = 0; i < a.size(); i++){
+            a[i] = a[i] + 1;
+            std::cout << "a: " << a[i] << " | b: " << b[i] << std::endl;
+        }
+        std::cout << "size a: " << a.size() << ", size b: " << b.size() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << RED "Exception caught: " << e.what() << NC << std::endl;
+    }
+    return 0;
 }
